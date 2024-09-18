@@ -141,7 +141,7 @@ export class MintCommand extends BoardcastCommand {
               if (token.info.minterMd5 === MinterType.OPEN_MINTER_V1) {
                 if (
                   getRemainSupply(minter.state.data, token.info.minterMd5) <
-                  limit
+                  amount
                 ) {
                   console.warn(
                     `small limit of ${unScaleByDecimals(limit, token.info.decimals)} in the minter UTXO!`,
@@ -149,11 +149,7 @@ export class MintCommand extends BoardcastCommand {
                   log(`retry to mint token [${token.info.symbol}] ...`);
                   continue;
                 }
-                amount =
-                  amount >
-                  getRemainSupply(minter.state.data, token.info.minterMd5)
-                    ? getRemainSupply(minter.state.data, token.info.minterMd5)
-                    : amount;
+                amount = getRemainSupply(minter.state.data, token.info.minterMd5)
               } else if (
                 token.info.minterMd5 == MinterType.OPEN_MINTER_V2 &&
                 amount != limit
